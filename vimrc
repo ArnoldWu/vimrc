@@ -1,28 +1,124 @@
-" vgod's vimrc
+" Fork from vgod's vimrc
 " Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
 " Fork me on GITHUB  https://github.com/vgod/vimrc
 
-" read https://github.com/vgod/vimrc/blob/master/README.md for more info
+" read https://github.com/ArnoldWu/vimrc/blob/master/README.md for more info
 
-
-" For pathogen.vim: auto load all plugins in .vim/bundle
-
-let g:pathogen_disabled = []
-if !has('gui_running')
-   call add(g:pathogen_disabled, 'powerline')
+" Setting up Vundle - the vim plugin bundler
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle..."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    let iCanHazVundle=0
 endif
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+" ============================================================================
+" Active plugins
+" You can disable or add new ones here:
+
+" Plugins from github repos:
+
+" Better file browser
+Bundle 'scrooloose/nerdtree'
+" Code commenter
+Bundle 'scrooloose/nerdcommenter'
+" Class/module browser
+Bundle 'majutsushi/tagbar'
+" Code and files fuzzy finder
+Bundle 'kien/ctrlp.vim'
+" Extension to ctrlp, for fuzzy command finder
+Bundle 'fisadev/vim-ctrlp-cmdpalette'
+" Zen coding
+Bundle 'mattn/emmet-vim'
+" Git integration
+Bundle 'motemen/git-vim'
+" Tab list panel
+Bundle 'kien/tabman.vim'
+" Airline
+Bundle 'bling/vim-airline'
+" Terminal Vim with 256 colors colorscheme
+Bundle 'fisadev/fisa-vim-colorscheme'
+" Consoles as buffers
+Bundle 'rosenfeld/conque-term'
+" Pending tasks list
+Bundle 'fisadev/FixedTaskList.vim'
+" Surround
+Bundle 'tpope/vim-surround'
+" Autoclose
+Bundle 'Townk/vim-autoclose'
+" Indent text object
+Bundle 'michaeljsmith/vim-indent-object'
+" Python mode (indentation, doc, refactor, lints, code checking, motion and
+" operators, highlighting, run and ipdb breakpoints)
+Bundle 'klen/python-mode'
+" Better autocompletion
+Bundle 'Shougo/neocomplcache.vim'
+" Snippets manager (SnipMate), dependencies, and snippets repo
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'honza/vim-snippets'
+Bundle 'garbas/vim-snipmate'
+" Git/mercurial/others diff icons on the side of the file lines
+Bundle 'mhinz/vim-signify'
+" Automatically sort python imports
+Bundle 'fisadev/vim-isort'
+" Drag visual blocks arround
+Bundle 'fisadev/dragvisuals.vim'
+" Window chooser
+Bundle 't9md/vim-choosewin'
+" Python and other languages code checker
+Bundle 'scrooloose/syntastic'
+" Paint css colors with the real color
+Bundle 'lilydjwg/colorizer'
+" Relative numbering of lines (0 is the current line)
+" (disabled by default because is very intrusive and can't be easily toggled
+" on/off. When the plugin is present, will always activate the relative 
+" numbering every time you go to normal mode. Author refuses to add a setting 
+" to avoid that)
+" Bundle 'myusuf3/numbers.vim'
+
+" Plugins from vim-scripts repos:
+
+" Search results counter
+Bundle 'IndexedSearch'
+" XML/HTML tags navigation
+Bundle 'matchit.zip'
+" Gvim colorscheme
+Bundle 'Wombat'
+" Yank history navigation
+Bundle 'YankRing.vim'
+
+" taglist
+Bundle 'vim-scripts/taglist.vim'
+
+" ============================================================================
+" Install plugins the first time vim runs
+
+if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :BundleInstall
+endif
 
 " General Settings
 
 set nocompatible	" not compatible with the old-fashion vi mode
 set bs=2		" allow backspacing over everything in insert mode
-set history=50		" keep 50 lines of command line history
+set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set autoread		" auto read when file is changed from outside
-
+set number              " show line number
 
 filetype off          " necessary to make ftdetect work on Linux
 syntax on
@@ -30,6 +126,7 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 
+let Tlist_Auto_Open=1 " default open Tag list
 
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
@@ -37,6 +134,8 @@ autocmd! bufwritepost .vimrc source ~/.vimrc
 
 syntax on		" syntax highlight
 set hlsearch		" search highlighting
+set incsearch           " incremental search
+set cul                 " highlight current line 
 
 if has("gui_running")	" GUI color and font settings
   set guifont=Osaka-Mono:h20
@@ -45,9 +144,6 @@ if has("gui_running")	" GUI color and font settings
   set cursorline        " highlight current line
   colors moria
   highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
-else
-" terminal color settings
-  colors vgod
 endif
 
 set clipboard=unnamed	" yank to the system register (*) by default
@@ -55,11 +151,14 @@ set showmatch		" Cursor shows matching ) and }
 set showmode		" Show current mode
 set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
 set wildmenu            " wild char completion menu
+set showcmd             
 
 " ignore these files while expanding wild chars
 set wildignore=*.o,*.class,*.pyc
 
 set autoindent		" auto indentation
+set smartindent         " smart indentation
+set cindent             " indentation for C
 set incsearch		" incremental search
 set nobackup		" no *~ backup files
 set copyindent		" copy the previous indentation on autoindenting
@@ -75,8 +174,8 @@ set tm=500
 
 " TAB setting{
    set expandtab        "replace <TAB> with spaces
-   set softtabstop=3 
-   set shiftwidth=3 
+   set softtabstop=4 
+   set shiftwidth=4
 
    au FileType Makefile set noexpandtab
 "}      							
@@ -128,51 +227,10 @@ endfun
 let mapleader=","
 let g:mapleader=","
 
-"replace the current word in all opened buffers
-map <leader>r :call Replace()<CR>
-
-" open the error console
-map <leader>cc :botright cope<CR> 
-" move to next error
-map <leader>] :cn<CR>
-" move to the prev error
-map <leader>[ :cp<CR>
-
-" --- move around splits {
-" move to and maximize the below split 
-map <C-J> <C-W>j<C-W>_
-" move to and maximize the above split 
-map <C-K> <C-W>k<C-W>_
-" move to and maximize the left split 
-nmap <c-h> <c-w>h<c-w><bar>
-" move to and maximize the right split  
-nmap <c-l> <c-w>l<c-w><bar>
-set wmw=0                     " set the min width of a window to 0 so we can maximize others 
-set wmh=0                     " set the min height of a window to 0 so we can maximize others
-" }
-
-" move around tabs. conflict with the original screen top/bottom
-" comment them out if you want the original H/L
-" go to prev tab 
-map <S-H> gT
-" go to next tab
-map <S-L> gt
-
-" new tab
-map <C-t><C-t> :tabnew<CR>
-" close tab
-map <C-t><C-w> :tabclose<CR> 
 
 " ,/ turn off search highlighting
 nmap <leader>/ :nohl<CR>
 
-" Bash like keys for the command line
-cnoremap <C-A>      <Home>
-cnoremap <C-E>      <End>
-cnoremap <C-K>      <C-U>
-
-" ,p toggles paste mode
-nmap <leader>p :set paste!<BAR>set paste?<CR>
 
 " allow multiple indentation/deindentation in visual mode
 vnoremap < <gv
@@ -181,23 +239,6 @@ vnoremap > >gv
 " :cd. change working directory to that of the current file
 cmap cd. lcd %:p:h
 
-" Writing Restructured Text (Sphinx Documentation) {
-   " Ctrl-u 1:    underline Parts w/ #'s
-   noremap  <C-u>1 yyPVr#yyjp
-   inoremap <C-u>1 <esc>yyPVr#yyjpA
-   " Ctrl-u 2:    underline Chapters w/ *'s
-   noremap  <C-u>2 yyPVr*yyjp
-   inoremap <C-u>2 <esc>yyPVr*yyjpA
-   " Ctrl-u 3:    underline Section Level 1 w/ ='s
-   noremap  <C-u>3 yypVr=
-   inoremap <C-u>3 <esc>yypVr=A
-   " Ctrl-u 4:    underline Section Level 2 w/ -'s
-   noremap  <C-u>4 yypVr-
-   inoremap <C-u>4 <esc>yypVr-A
-   " Ctrl-u 5:    underline Section Level 3 w/ ^'s
-   noremap  <C-u>5 yypVr^
-   inoremap <C-u>5 <esc>yypVr^A
-"}
 
 "--------------------------------------------------------------------------- 
 " PROGRAMMING SHORTCUTS
@@ -285,24 +326,6 @@ let g:tex_flavor='latex'
 
 "}
 
-
-" --- AutoClose - Inserts matching bracket, paren, brace or quote 
-" fixed the arrow key problems caused by AutoClose
-if !has("gui_running")	
-   set term=linux
-   imap OA <ESC>ki
-   imap OB <ESC>ji
-   imap OC <ESC>li
-   imap OD <ESC>hi
-
-   nmap OA k
-   nmap OB j
-   nmap OC l
-   nmap OD h
-endif
-
-
-
 " --- Command-T
 let g:CommandTMaxHeight = 15
 
@@ -336,3 +359,50 @@ au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw! " recompile c
 
 " --- vim-gitgutter
 let g:gitgutter_enabled = 1
+
+
+
+let Tlist_Ctags_Cmd='/usr/bin/ctags'
+"nnoremap <F12>:TlistToggle<CR>
+let Tlist_Use_Left_Window=1
+let Tlist_File_Auto_Close=1
+
+" nnoremap <silent><F5>:Rfgrep<CR>
+" nnoremap <silent><F6>:Grep<CR>
+
+let Grep_Path='/bin/grep'
+let Grep_Find_Path='/usr/bin/find'
+let Grep_Xargs_path='/usr/bin/xargs'
+
+let Grep_Default_Filelist = '*.c *.cpp *.h *.h* *.hpp *.asm *.s *.min *.java *.mk *.mak'
+let Grep_Default_Options = '-rni'
+let Grep_Skip_Files = '*.bak *~ *.o *.obj *.lib .svn .err .log .git'
+let Grep_OpenQuickfixWindow = 1 " using quickfix window
+let Grep_Find_Use_Xargs = 1
+
+nnoremap <F10> :!astyle.exe --style=ansi --pad=oper --unpad=paren --convert-tabs --suffix=none --indent-switches --indent-preprocessor --brackets=break %<cr>
+
+"CScope setting
+
+"silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+"silent! execute "!cscope -Rbkq "
+  
+if has("cscope")
+    set csprg=/usr/bin/cscope              "cscope path
+    set csto=1                             " search tags first, and then cscope database
+    " add any database in current directory   
+    if filereadable("cscope.out")   
+       "add cscope database
+       execute "cs add cscope.out"         
+    endif   
+    set csverb                             "show status about adding database
+endif
+
+nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
