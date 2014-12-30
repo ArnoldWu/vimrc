@@ -1,4 +1,4 @@
-vgod's vimrc
+Arnold's vimrc
 ============
 Author: Arnold Wu <anonwu@gmail.com>
 

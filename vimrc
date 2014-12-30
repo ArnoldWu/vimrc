@@ -1,6 +1,7 @@
 " Fork from vgod's vimrc
 " Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
 " Fork me on GITHUB  https://github.com/vgod/vimrc
+" Customized by Arnold Wu
 
 " read https://github.com/ArnoldWu/vimrc/blob/master/README.md for more info
 
@@ -142,7 +143,7 @@ if has("gui_running")	" GUI color and font settings
   set background=dark 
   set t_Co=256          " 256 color mode
   set cursorline        " highlight current line
-  colors moria
+  "colors moria
   highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
 endif
 
@@ -179,6 +180,8 @@ set tm=500
 
    au FileType Makefile set noexpandtab
 "}      							
+
+set nocp
 
 " status line {
 set laststatus=2
@@ -362,15 +365,15 @@ let g:gitgutter_enabled = 1
 
 
 
-let Tlist_Ctags_Cmd='/usr/bin/ctags'
-"nnoremap <F12>:TlistToggle<CR>
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+nnoremap <F12> :TlistToggle<CR>
 let Tlist_Use_Left_Window=1
 let Tlist_File_Auto_Close=1
 
-" nnoremap <silent><F5>:Rfgrep<CR>
-" nnoremap <silent><F6>:Grep<CR>
+nnoremap <silent><F5> :Rfgrep<CR>
+nnoremap <silent><F6> :Grep<CR>
 
-let Grep_Path='/bin/grep'
+let Grep_Path='/usr/bin/grep'
 let Grep_Find_Path='/usr/bin/find'
 let Grep_Xargs_path='/usr/bin/xargs'
 

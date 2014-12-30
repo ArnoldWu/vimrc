@@ -1,9 +1,10 @@
 #!/bin/sh
 cd ..
-ln -s .vim/vimrc .vimrc
-ln -s .vim/gvimrc .gvimrc
+ln -s ~/.vim/vimrc .vimrc
+ln -s ~/.vim/gvimrc .gvimrc
 
-# xmledit
-cd .vim/bundle/xmledit/ftplugin/
-ln -s xml.vim html.vim
-ln -s xml.vim xhtml.vim
+
+echo "Installing Vundle..."
+echo ""
+mkdir -p ~/.vim/bundle
+git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
