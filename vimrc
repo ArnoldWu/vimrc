@@ -103,6 +103,10 @@ Bundle 'YankRing.vim'
 " taglist
 Bundle 'vim-scripts/taglist.vim'
 
+" Java Browser
+Bundle 'JavaBrowser'
+
+
 " ============================================================================
 " Install plugins the first time vim runs
 
@@ -120,6 +124,7 @@ set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set autoread		" auto read when file is changed from outside
 set number              " show line number
+set autochdir           " automatically change the current directory
 
 filetype off          " necessary to make ftdetect work on Linux
 syntax on
@@ -127,7 +132,7 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 
-let Tlist_Auto_Open=1 " default open Tag list
+"let Tlist_Auto_Open=1 default open Tag list
 
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
@@ -185,7 +190,7 @@ set nocp
 
 " status line {
 set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \ 
+set statusline=\ %{HasPaste()}%<%-15.25(%F%)%m%r%h\ %w\ \ 
 set statusline+=\ \ \ [%{&ff}/%Y] 
 set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\ 
 set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
@@ -246,9 +251,6 @@ cmap cd. lcd %:p:h
 "--------------------------------------------------------------------------- 
 " PROGRAMMING SHORTCUTS
 "--------------------------------------------------------------------------- 
-
-" Ctrl-[ jump out of the tag stack (undo Ctrl-])
-map <C-[> <ESC>:po<CR>
 
 " ,g generates the header guard
 map <leader>g :call IncludeGuard()<CR>
@@ -365,15 +367,25 @@ let g:gitgutter_enabled = 1
 
 
 
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-nnoremap <F12> :TlistToggle<CR>
+let Tlist_Ctags_Cmd='/usr/bin/ctags'
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
+nmap <F12> :TlistToggle<CR>
+imap <F12> <ESC><F12> 
+
+set tags+=/home/likewise-open/SPREADTRUM/michael.w/Codebase/sprdroid5.0
+
+
+"nnoremap <F12> :TlistToggle<CR>
+map <silent> <leader>tl :TlistToggle<cr>
 let Tlist_Use_Left_Window=1
 let Tlist_File_Auto_Close=1
 
 nnoremap <silent><F5> :Rfgrep<CR>
+"map <F5> :Rfgrep<CR>
+
 nnoremap <silent><F6> :Grep<CR>
 
-let Grep_Path='/usr/bin/grep'
+let Grep_Path='/bin/grep'
 let Grep_Find_Path='/usr/bin/find'
 let Grep_Xargs_path='/usr/bin/xargs'
 
@@ -409,3 +421,29 @@ nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1 
+
+" <leader> is key ","
+
+colorscheme elflord
+
