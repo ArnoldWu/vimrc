@@ -11,11 +11,11 @@ ONE-STEP INSTALL
 
 Use curl (for Mac OS X):
 
-     curl -o - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | sh
+     curl -o - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | bash
 
 or wget (for most UNIX platforms):
 
-     wget -O - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | sh
+     wget -O - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | bash
 
 
 MANUALLY INSTALL
