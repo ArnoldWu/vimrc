@@ -9,13 +9,13 @@ Original Author: Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
 ONE-STEP INSTALL
 ----------------
 
-Use curl (for Mac OS X):
-
-     curl -o - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | bash
-
 or wget (for most UNIX platforms):
 
      wget -O - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | bash
+
+Use curl (for Mac OS X):
+
+     curl -o - https://raw.github.com/ArnoldWu/vimrc/master/auto-install.sh | bash
 
 
 MANUALLY INSTALL
