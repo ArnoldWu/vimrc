@@ -30,6 +30,8 @@ Bundle 'gmarik/vundle'
 
 " Plugins from github repos:
 
+" for vertical indent line
+Bundle 'Yggdroot/indentLine'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
 " Code commenter
