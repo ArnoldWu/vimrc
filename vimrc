@@ -103,7 +103,8 @@ Bundle 'Wombat'
 Bundle 'YankRing.vim'
 
 " taglist
-Bundle 'vim-scripts/taglist.vim'
+"Bundle 'vim-scripts/taglist.vim'
+Bundle 'taglist.vim'
 
 " Java Browser
 Bundle 'JavaBrowser'
